@@ -1,0 +1,17 @@
+{
+  "name": "express-mongo",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "Dion Fananie",
+  "license": "MIT",
+  "scripts": {
+    "start": "nodemon app.js"
+  },
+  "dependencies": {
+    "body-parser": "^1.19.1",
+    "dotenv": "^15.0.0",
+    "express": "^4.17.2",
+    "mongoose": "^6.1.9",
+    "nodemon": "^2.0.15"
+  }
+}
