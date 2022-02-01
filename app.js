@@ -9,7 +9,7 @@ const postRoutes = require('./routes/post')
 app.use(bodyParser.json())
 
 app.use('/post', postRoutes)
-app.get('/', (res, req)=>{
+app.get('/', (req, res)=>{
     res.send('Welcome to express mongo in render')
 })
 
