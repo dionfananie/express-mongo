@@ -3,7 +3,7 @@ const router = express.Router();
 const Qurban = require('../models/Qurban');
 const QurbanType = require('../models/QurbanType');
 
-router.get('/qurban', async (req, res) => {
+router.get('/', async (req, res) => {
   const id = req.query.id || 0;
   try {
     let lists = [];
@@ -15,7 +15,7 @@ router.get('/qurban', async (req, res) => {
   }
 });
 
-router.post('/qurban', async (req, res) => {
+router.post('/create', async (req, res) => {
   const qurban = new Qurban({
     name: req.body.name,
     weight: req.body.weight,
