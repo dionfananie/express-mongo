@@ -33,6 +33,7 @@ router.post('/create', async (req, res) => {
     type: req.body.type,
     price: req.body.price,
     desc: req.body.desc,
+    quota: req.body.quota,
   });
   const savePost = await qurban.save();
   res.json(savePost);

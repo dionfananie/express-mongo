@@ -14,6 +14,9 @@ const QurbanSchema = mongoose.Schema({
   price: {
     type: Number,
   },
+  quota: {
+    type: Number,
+  },
   desc: String,
   date: {
     type: Date,
