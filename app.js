@@ -5,7 +5,8 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 // import routes
 const postRoutes = require('./routes/post');
-const createRoutes = require('./routes/qurban');
+const buyerRoutes = require('./routes/buyer');
+const qurbanRoutes = require('./routes/qurban');
 const authRoutes = require('./routes/auth');
 
 app.use(
@@ -14,7 +15,8 @@ app.use(
   }),
 );
 app.use('/post', postRoutes);
-app.use('/qurban', createRoutes);
+app.use('/qurban', qurbanRoutes);
+app.use('/buyer', buyerRoutes);
 app.use('/auth', authRoutes);
 
 app.get('/', (req, res) => {

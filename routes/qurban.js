@@ -14,6 +14,7 @@ router.get('/', async (req, res) => {
     res.json({ message: error });
   }
 });
+
 router.get('/type', async (req, res) => {
   const id = req.query.id || 0;
   try {
@@ -26,8 +27,22 @@ router.get('/type', async (req, res) => {
   }
 });
 
+router.post('/update', async (req, res) => {
+  const id = req.query.id || 0;
+  const total = req.query.total || 0;
+  try {
+    let lists = [];
+    if (id) lists = await Qurban.findOneAndUpdate({ _id: id }, { $inc: { quota: total * -1 } }, { new: true });
+    else lists = await Qurban.find();
+    res.json(lists);
+  } catch (error) {
+    res.json({ message: error });
+  }
+});
+
 router.post('/create', async (req, res) => {
   const qurban = new Qurban({
+    image: req.body.image,
     name: req.body.name,
     weight: req.body.weight,
     type: req.body.type,

@@ -1,6 +1,9 @@
 const mongoose = require('mongoose');
 
 const QurbanSchema = mongoose.Schema({
+  image: {
+    type: String,
+  },
   name: {
     type: String,
     require: true,
