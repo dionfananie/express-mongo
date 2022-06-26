@@ -14,6 +14,17 @@ router.get('/', async (req, res) => {
     res.json({ message: error });
   }
 });
+router.get('/type', async (req, res) => {
+  const id = req.query.id || 0;
+  try {
+    let lists = [];
+    if (id) lists = await QurbanType.findById(id);
+    else lists = await QurbanType.find();
+    res.json(lists);
+  } catch (error) {
+    res.json({ message: error });
+  }
+});
 
 router.post('/create', async (req, res) => {
   const qurban = new Qurban({
