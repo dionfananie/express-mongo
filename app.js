@@ -5,10 +5,16 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 // import routes
 const postRoutes = require('./routes/post');
+const createRoutes = require('./routes/create');
 const authRoutes = require('./routes/auth');
 
-app.use(bodyParser.json());
+app.use(
+  bodyParser.urlencoded({
+    extended: true,
+  }),
+);
 app.use('/post', postRoutes);
+app.use('/create', createRoutes);
 app.use('/auth', authRoutes);
 
 app.get('/', (req, res) => {
@@ -16,9 +22,10 @@ app.get('/', (req, res) => {
 });
 // connect to DB
 
-const mongoUrl = `mongodb+srv://${process.env.MONGO_NAME}:${process.env.MONGO_PASSWORD}@${process.env.MONGO_CLUSTER}/myFirstDatabase?retryWrites=true&w=majority`;
+const mongoUrl = `mongodb+srv://${process.env.MONGO_NAME}:${process.env.MONGO_PASSWORD}@${process.env.MONGO_CLUSTER}/${process.env.MONGO_DATABASE}?retryWrites=true&w=majority`;
 mongoose.connect(mongoUrl, { useNewUrlParser: true }, () => {
   console.log('connected to DB Mongo Atlas!');
+  console.log('Running on port 3030.');
 });
 
 app.listen(process.env.PORT || 3030);

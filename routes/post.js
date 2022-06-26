@@ -1,9 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const Post = require('../models/Post');
-const verify = require('../middleware/auth');
 
-router.get('/', verify, async (req, res) => {
+router.get('/', async (req, res) => {
   const id = req.query.id || 0;
   try {
     let posts = [];
