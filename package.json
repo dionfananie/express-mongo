@@ -6,10 +6,12 @@
   "license": "MIT",
   "scripts": {
     "start": "node server",
-    "dev": "nodemon server-dev"
+    "dev": "nodemon server-dev",
+    "dev-local": "nodemon app.js",
+    "start-local": "node app.js"
   },
   "engines": {
-    "node": "14.19.3"
+    "node": "14.18.2"
   },
   "dependencies": {
     "@vercel/node": "^1.11.1",

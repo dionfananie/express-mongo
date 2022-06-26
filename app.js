@@ -14,7 +14,7 @@ app.use(
   }),
 );
 app.use('/post', postRoutes);
-app.use('/create', createRoutes);
+app.use('/qurban', createRoutes);
 app.use('/auth', authRoutes);
 
 app.get('/', (req, res) => {
