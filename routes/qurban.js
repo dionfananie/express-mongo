@@ -40,6 +40,10 @@ router.post('/update', async (req, res) => {
   }
 });
 
+/**
+ * function create qurban sapi
+ */
+
 router.post('/create', async (req, res) => {
   const qurban = new Qurban({
     image: req.body.image,
