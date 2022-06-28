@@ -9,6 +9,8 @@ const buyerRoutes = require('./routes/buyer');
 const qurbanRoutes = require('./routes/qurban');
 const authRoutes = require('./routes/auth');
 
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded());
 app.use(
   bodyParser.urlencoded({
     extended: true,
