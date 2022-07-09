@@ -23,6 +23,7 @@ router.post('/', async (req, res) => {
   try {
     res.header('Access-Control-Allow-Origin', '*');
     res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
+
     const id = req.query.id || 0;
     if (id) await Qurban.findOneAndUpdate({ _id: id }, { $inc: { quota: -1 } }, { new: true });
     const buyer = new Buyer({
@@ -32,9 +33,9 @@ router.post('/', async (req, res) => {
       qurbanId: req.body.qurbanId,
       desc: req.body.description,
     });
-    const savePost = await buyer.save();
-    console.log(savePost);
-    res.json(savePost);
+
+    await buyer.save();
+    res.json({ is_success: 1, message: `Success add Qurban's buyer` });
   } catch (error) {
     console.error(error);
     res.json({ message: error });
