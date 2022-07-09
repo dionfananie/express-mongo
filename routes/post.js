@@ -10,6 +10,7 @@ router.get('/', async (req, res) => {
     else posts = await Post.find();
     res.json(posts);
   } catch (error) {
+    console.error(error);
     res.json({ message: error });
   }
 });

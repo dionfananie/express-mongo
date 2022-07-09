@@ -13,6 +13,8 @@ router.get('/', async (req, res) => {
     else lists = await Buyer.find();
     res.json(lists);
   } catch (error) {
+    console.error(error);
+
     res.json({ message: error });
   }
 });
@@ -31,6 +33,7 @@ router.post('/', async (req, res) => {
     const savePost = await buyer.save();
     res.json(savePost);
   } catch (error) {
+    console.error(error);
     res.json({ message: error });
   }
 });

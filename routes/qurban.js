@@ -2,6 +2,8 @@ const express = require('express');
 const router = express.Router();
 const Qurban = require('../models/Qurban');
 const QurbanType = require('../models/QurbanType');
+const cloudinary = require('../utils/cloudinary');
+const upload = require('../utils/multer');
 
 router.get('/', async (req, res) => {
   const id = req.query.id || 0;
@@ -11,6 +13,8 @@ router.get('/', async (req, res) => {
     else lists = await Qurban.find();
     res.json(lists);
   } catch (error) {
+    console.error(error);
+
     res.json({ message: error });
   }
 });
@@ -23,6 +27,8 @@ router.get('/type', async (req, res) => {
     else lists = await QurbanType.find();
     res.json(lists);
   } catch (error) {
+    console.error(error);
+
     res.json({ message: error });
   }
 });
@@ -36,6 +42,8 @@ router.post('/update', async (req, res) => {
     else lists = await Qurban.find();
     res.json(lists);
   } catch (error) {
+    console.error(error);
+
     res.json({ message: error });
   }
 });
@@ -44,27 +52,36 @@ router.post('/update', async (req, res) => {
  * function create qurban sapi
  */
 
-router.post('/create', async (req, res) => {
-  const qurban = new Qurban({
-    image: req.body.image,
-    name: req.body.name,
-    weight: req.body.weight,
-    type: req.body.type,
-    price: req.body.price,
-    desc: req.body.desc,
-    quota: req.body.quota,
-  });
-  const savePost = await qurban.save();
-  res.json(savePost);
+router.post('/create', upload.single('image'), async (req, res) => {
+  try {
+    const result = await cloudinary.uploader.upload(req.file.path);
+    const qurban = new Qurban({
+      image: { photos: result.secure_url || '', id: result.public_id || '' },
+      name: req.body.name,
+      weight: req.body.weight,
+      type: req.body.type,
+      price: req.body.price,
+      desc: req.body.desc,
+      quota: req.body.quota,
+    });
+    const savePost = await qurban.save();
+    res.json(savePost);
+  } catch (error) {
+    console.log(error);
+  }
 });
 
 router.post('/qurban-type', async (req, res) => {
-  const qurban = new QurbanType({
-    name: req.body.name,
-    type: req.body.type,
-  });
-  const savePost = await qurban.save();
-  res.json(savePost);
+  try {
+    const qurban = new QurbanType({
+      name: req.body.name,
+      type: req.body.type,
+    });
+    const savePost = await qurban.save();
+    res.json(savePost);
+  } catch (error) {
+    console.error(error);
+  }
 });
 
 module.exports = router;
