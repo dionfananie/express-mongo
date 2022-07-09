@@ -21,6 +21,8 @@ router.get('/', async (req, res) => {
 
 router.post('/', async (req, res) => {
   try {
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
     const id = req.query.id || 0;
     if (id) await Qurban.findOneAndUpdate({ _id: id }, { $inc: { quota: -1 } }, { new: true });
     const buyer = new Buyer({
@@ -28,9 +30,10 @@ router.post('/', async (req, res) => {
       address: req.body.address,
       handphone: req.body.handphone,
       qurbanId: req.body.qurbanId,
-      desc: req.body.desc,
+      desc: req.body.description,
     });
     const savePost = await buyer.save();
+    console.log(savePost);
     res.json(savePost);
   } catch (error) {
     console.error(error);

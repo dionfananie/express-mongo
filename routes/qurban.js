@@ -54,12 +54,13 @@ router.post('/update', async (req, res) => {
 
 router.post('/create', upload.single('image'), async (req, res) => {
   try {
+    console.log('req.body.type:', req.body);
     const result = await cloudinary.uploader.upload(req.file.path);
     const qurban = new Qurban({
       image: { photos: result.secure_url || '', id: result.public_id || '' },
       name: req.body.name,
       weight: req.body.weight,
-      type: req.body.type,
+      qurban_type: req.body.qurban_type,
       price: req.body.price,
       desc: req.body.desc,
       quota: req.body.quota,

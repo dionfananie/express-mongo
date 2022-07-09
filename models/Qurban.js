@@ -12,7 +12,7 @@ const QurbanSchema = mongoose.Schema({
   weight: {
     type: String,
   },
-  type: {
+  qurban_type: {
     type: String,
   },
   price: {
