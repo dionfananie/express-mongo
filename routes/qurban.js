@@ -4,13 +4,21 @@ const Qurban = require('../models/Qurban');
 const QurbanType = require('../models/QurbanType');
 const cloudinary = require('../utils/cloudinary');
 const upload = require('../utils/multer');
+const sanitizeMongo = require('mongo-sanitize');
 
 router.get('/', async (req, res) => {
-  const id = req.query.id || 0;
+  const { id, projection } = req.query;
+  console.log(projection);
+
+  let trustedProjection;
+  if (projection) {
+    const projectionObj = JSON.parse(projection);
+    trustedProjection = sanitizeMongo(projectionObj);
+  }
   try {
     let lists = [];
     if (id) lists = await Qurban.findById(id);
-    else lists = await Qurban.find();
+    else lists = await Qurban.find({}, trustedProjection);
     res.json(lists);
   } catch (error) {
     console.error(error);
