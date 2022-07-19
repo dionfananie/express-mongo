@@ -1,16 +1,18 @@
 const express = require('express');
+const sanitizeObject = require('../helpers/sanitizeObject');
 const router = express.Router();
 const Buyer = require('../models/Buyer');
 const Qurban = require('../models/Qurban');
 
 router.get('/', async (req, res) => {
-  const id = req.query.id || 0;
-  const qurbanId = req.query.qurbanId || 0;
+  const { id, qurbanId, projection } = req.query;
+  const trustedProjection = sanitizeObject(projection);
+
   try {
     let lists = [];
     if (id) lists = await Buyer.findById(id);
     if (qurbanId) lists = await Buyer.find({ qurbanId: qurbanId });
-    else lists = await Buyer.find();
+    else lists = await Buyer.find({}, trustedProjection);
     res.json(lists);
   } catch (error) {
     console.error(error);
