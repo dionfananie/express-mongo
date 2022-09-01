@@ -26,7 +26,7 @@ router.post('/', async (req, res) => {
     res.header('Access-Control-Allow-Origin', '*');
     res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
 
-    const id = req.query.id || 0;
+    const id = req.body.id || 0;
     if (id) await Qurban.findOneAndUpdate({ _id: id }, { $inc: { quota: -1 } }, { new: true });
     const buyer = new Buyer({
       name: req.body.name,
