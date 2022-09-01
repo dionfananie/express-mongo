@@ -59,7 +59,7 @@ router.post('/create', upload.single('image'), async (req, res) => {
   try {
     res.header('Access-Control-Allow-Origin', '*');
     res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
-
+    console.log('body: ', req);
     const result = await cloudinary.uploader.upload(req.file.path);
     const qurban = new Qurban({
       image: { photos: result.secure_url || '', id: result.public_id || '' },
@@ -73,7 +73,7 @@ router.post('/create', upload.single('image'), async (req, res) => {
     await qurban.save();
     res.json({ is_success: 1, message: `Success add Qurban data` });
   } catch (error) {
-    console.log(error);
+    // console.log(error);
   }
 });
 
