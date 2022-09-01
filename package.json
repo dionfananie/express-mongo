@@ -11,7 +11,7 @@
     "start-local": "node app.js"
   },
   "engines": {
-    "node": "14.18.2"
+    "node": "14.19.3"
   },
   "dependencies": {
     "@hapi/joi": "^17.1.1",
