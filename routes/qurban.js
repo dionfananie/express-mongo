@@ -76,7 +76,7 @@ router.post('/create', upload.single('image'), async (req, res) => {
   }
 });
 
-router.get('/delete', async (req, res) => {
+router.post('/delete', async (req, res) => {
   try {
     const id = req.query.id || 0;
     await Qurban.deleteOne({ _id: id });
@@ -86,7 +86,7 @@ router.get('/delete', async (req, res) => {
   }
 });
 
-router.post('/qurban-type', async (req, res) => {
+router.post('/type/create', async (req, res) => {
   try {
     const qurban = new QurbanType({
       name: req.body.name,
@@ -94,6 +94,20 @@ router.post('/qurban-type', async (req, res) => {
     });
     await qurban.save();
     res.json({ is_success: 1, message: `Success add Qurban type` });
+  } catch (error) {
+    console.error(error);
+  }
+});
+
+router.get('/type/delete', async (req, res) => {
+  try {
+    const id = req.query.id || 0;
+    const resp = await QurbanType.deleteOne({ _id: id });
+    if (resp.deletedCount > 0) {
+      res.json({ is_success: 1, message: `Success delete Tipe Qurban` });
+      return;
+    }
+    res.json({ is_success: 0, message: `Failed delete Tipe Qurban` });
   } catch (error) {
     console.error(error);
   }

@@ -22,7 +22,7 @@ router.get('/', async (req, res) => {
 
 router.post('/', async (req, res) => {
   try {
-    const id = req.body.id || 0;
+    const qurbanId = req.body.qurbanId || 0;
     const buyer = new Buyer({
       name: req.body.name,
       address: req.body.address,
@@ -32,8 +32,29 @@ router.post('/', async (req, res) => {
     });
 
     const resp = await buyer.save();
-    if (id && resp.name) await Qurban.findOneAndUpdate({ _id: id }, { $inc: { quota: -1 } }, { new: true });
+    if (qurbanId && resp.name) {
+      await Qurban.findOneAndUpdate({ _id: qurbanId }, { $inc: { quota: -1 } }, { new: true });
+    }
     res.json({ is_success: 1, message: `Success add Qurban's buyer` });
+  } catch (error) {
+    console.error(error);
+    res.json({ message: error });
+  }
+});
+
+router.get('/delete', async (req, res) => {
+  try {
+    const id = req.query.id || 0;
+    if (!id) {
+      res.json({ is_success: 0, message: `Need Id` });
+      return;
+    }
+    const resp = await Buyer.deleteOne({ _id: id });
+    if (resp.deletedCount > 0) {
+      res.json({ is_success: 1, message: `Success delete Buyer data` });
+      return;
+    }
+    res.json({ is_success: 0, message: `Failed delete Buyer data` });
   } catch (error) {
     console.error(error);
     res.json({ message: error });
