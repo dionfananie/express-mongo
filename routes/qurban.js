@@ -13,7 +13,7 @@ router.get('/', async (req, res) => {
   try {
     let lists = [];
     if (id) lists = await Qurban.findById(id);
-    else lists = await Qurban.find({}, trustedProjection);
+    else lists = await Qurban.find({}, trustedProjection).sort({ date: -1 });
     res.json(lists);
   } catch (error) {
     console.error(error);
@@ -72,7 +72,7 @@ router.post('/create', upload.single('image'), async (req, res) => {
     await qurban.save();
     res.json({ is_success: 1, message: `Success add Qurban data` });
   } catch (error) {
-    console.log(error);
+    console.error(error);
   }
 });
 
@@ -82,7 +82,7 @@ router.get('/delete', async (req, res) => {
     await Qurban.deleteOne({ _id: id });
     res.json({ is_success: 1, message: `Success delete Qurban data` });
   } catch (error) {
-    console.log(error);
+    console.error(error);
   }
 });
 
