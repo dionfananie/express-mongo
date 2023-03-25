@@ -5,6 +5,9 @@ const router = express.Router();
 const User = require('../models/User');
 const { registerValidation, loginValidation } = require('../Validation/user');
 router.post('/register', async (req, res) => {
+  res.header('Access-Control-Allow-Origin', 'http://localhost:3000');
+  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
+
   const { name, email, password } = req.body || {};
 
   //   checking validation
@@ -26,7 +29,7 @@ router.post('/register', async (req, res) => {
       password: hashedPass,
     });
     await user.save();
-    res.send({ user: user._id });
+    res.send({ user: user._id, name, email });
   } catch (err) {
     res.json({ message: err.toString() });
   }
@@ -34,24 +37,27 @@ router.post('/register', async (req, res) => {
 
 router.post('/login', async (req, res) => {
   try {
+    res.header('Access-Control-Allow-Origin', 'http://localhost:3000');
+    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
     const { email, password } = req.body || {};
     // validate user
     const { error } = loginValidation(req.body);
-    if (error) return res.status(400).send(error.details[0].message);
+    if (error) return res.status(400).send({ is_success: 0, text: error.details[0].message });
 
     // check email exist
     const user = await User.findOne({ email });
-    if (!user) return res.status(400).send('Email or Password is wrong');
+    if (!user) return res.status(400).send({ is_success: 0, text: 'Invalid Email' });
 
     // checking password
     const validPass = bcrypt.compareSync(password, user.password);
-    if (!validPass) return res.status(400).send('Invalid Password');
+    if (!validPass) return res.status(400).send({ is_success: 0, text: 'Invalid Password' });
 
     //   create and assign a token to header
-    const token = jwt.sign({ _id: user._id }, process.env.TOKEN_SECRET);
-    res.header('auth-token', token).send(token);
+    const token = jwt.sign({ _id: user._id }, process.env.TOKEN_SECRET, { expiresIn: '24h' });
+    // res.header('auth-token', token).send(token);
+    res.cookie('token', token, { httpOnly: true });
 
-    res.send('Logged in Success!');
+    res.send({ is_success: 1, text: 'Login Success!' });
   } catch (error) {
     console.error(error);
   }

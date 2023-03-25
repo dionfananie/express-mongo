@@ -10,8 +10,11 @@ const buyerRoutes = require('./routes/buyer');
 const qurbanRoutes = require('./routes/qurban');
 const authRoutes = require('./routes/auth');
 const connectMongo = require('./utils/connectMongo');
-
-app.use(cors());
+const corsConfig = {
+  credentials: true,
+  origin: 'http://localhost:3000',
+};
+app.use(cors(corsConfig));
 app.use(bodyParser.json({ limit: '50mb' }));
 app.use(
   bodyParser.urlencoded({
