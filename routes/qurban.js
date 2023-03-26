@@ -80,16 +80,19 @@ router.get('/delete', async (req, res) => {
   try {
     const id = req.query.id || 0;
     const qurban = await Qurban.findById(id);
+    const { image } = qurban || {};
     const { deletedCount } = await Qurban.deleteOne({ _id: id });
     if (deletedCount > 0) {
-      const { image } = qurban || {};
       const { id: publicId } = image || {};
-      const { result } = await cloudinary.uploader.destroy(publicId);
-      console.log('result: ', result);
-      if (result === 'ok') {
-        res.json({ is_success: 1, message: `Success delete Qurban data` });
-        return;
+      if (publicId) {
+        const { result } = await cloudinary.uploader.destroy(publicId);
+        if (result === 'ok') {
+          res.json({ is_success: 1, message: `Success delete Qurban data` });
+          return;
+        }
       }
+      res.json({ is_success: 1, message: `Success delete Qurban data` });
+      return;
     }
     res.json({ is_success: 0, message: `Failed delete Qurban data` });
   } catch (error) {
