@@ -22,18 +22,20 @@ router.get('/', async (req, res) => {
 
 router.post('/', async (req, res) => {
   try {
-    const qurbanId = req.body.qurbanId || 0;
+    const { name, address, handphone, qurban, description } = req.body || {};
+    const parsedQurban = JSON.parse(qurban);
+    const qurbanId = parsedQurban.qurban_id;
     const buyer = new Buyer({
-      name: req.body.name,
-      address: req.body.address,
-      handphone: req.body.handphone,
-      qurbanId: req.body.qurbanId,
-      desc: req.body.description,
+      name: name,
+      address: address,
+      handphone: handphone,
+      qurban: parsedQurban,
+      desc: description,
     });
 
     const resp = await buyer.save();
     if (qurbanId && resp.name) {
-      await Qurban.findOneAndUpdate({ _id: qurbanId }, { $inc: { quota: -1 } }, { new: true });
+      await Qurban.findByIdAndUpdate(qurbanId, { $inc: { quota: -1 } }, { new: true });
     }
     res.json({ is_success: 1, message: `Success add Qurban's buyer` });
   } catch (error) {

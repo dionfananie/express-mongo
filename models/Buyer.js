@@ -1,5 +1,11 @@
 const mongoose = require('mongoose');
 
+const QurbanSchema = mongoose.Schema({
+  qurban_id: String,
+  name: String,
+  qurban_type: String,
+});
+
 const BuyerSchema = mongoose.Schema({
   name: {
     type: String,
@@ -13,8 +19,9 @@ const BuyerSchema = mongoose.Schema({
     type: String,
     require: true,
   },
-  qurbanId: {
-    type: String,
+  qurban: {
+    type: QurbanSchema,
+    require: true,
   },
   desc: String,
   date: {

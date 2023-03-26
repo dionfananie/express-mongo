@@ -59,7 +59,7 @@ router.post('/create', upload.single('image'), async (req, res) => {
   try {
     res.header('Access-Control-Allow-Origin', '*');
     res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
-    const result = await cloudinary.uploader.upload(req.file.path);
+    const result = await cloudinary.uploader.upload(req.file.path, { use_filename: true, unique_filename: false });
     const qurban = new Qurban({
       image: { photos: result.secure_url || '', id: result.public_id || '' },
       name: req.body.name,
@@ -76,11 +76,22 @@ router.post('/create', upload.single('image'), async (req, res) => {
   }
 });
 
-router.post('/delete', async (req, res) => {
+router.get('/delete', async (req, res) => {
   try {
     const id = req.query.id || 0;
-    await Qurban.deleteOne({ _id: id });
-    res.json({ is_success: 1, message: `Success delete Qurban data` });
+    const qurban = await Qurban.findById(id);
+    const { deletedCount } = await Qurban.deleteOne({ _id: id });
+    if (deletedCount > 0) {
+      const { image } = qurban || {};
+      const { id: publicId } = image || {};
+      const { result } = await cloudinary.uploader.destroy(publicId);
+      console.log('result: ', result);
+      if (result === 'ok') {
+        res.json({ is_success: 1, message: `Success delete Qurban data` });
+        return;
+      }
+    }
+    res.json({ is_success: 0, message: `Failed delete Qurban data` });
   } catch (error) {
     console.error(error);
   }

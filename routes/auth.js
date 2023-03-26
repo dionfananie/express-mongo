@@ -4,10 +4,8 @@ const jwt = require('jsonwebtoken');
 const router = express.Router();
 const User = require('../models/User');
 const { registerValidation, loginValidation } = require('../Validation/user');
-router.post('/register', async (req, res) => {
-  res.header('Access-Control-Allow-Origin', 'http://localhost:3000');
-  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
 
+router.post('/register', async (req, res) => {
   const { name, email, password } = req.body || {};
 
   //   checking validation
@@ -37,8 +35,6 @@ router.post('/register', async (req, res) => {
 
 router.post('/login', async (req, res) => {
   try {
-    res.header('Access-Control-Allow-Origin', 'http://localhost:3000');
-    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
     const { email, password } = req.body || {};
     // validate user
     const { error } = loginValidation(req.body);

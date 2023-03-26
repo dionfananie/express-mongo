@@ -10,11 +10,20 @@ const buyerRoutes = require('./routes/buyer');
 const qurbanRoutes = require('./routes/qurban');
 const authRoutes = require('./routes/auth');
 const connectMongo = require('./utils/connectMongo');
-const corsConfig = {
+
+var whitelist = process.env.ALLOWED_ORIGIN;
+var corsOptions = {
   credentials: true,
-  origin: 'http://localhost:3000',
+  origin: function (origin, callback) {
+    const originUrl = origin || whitelist;
+    if (whitelist.indexOf(originUrl) !== -1) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
 };
-app.use(cors(corsConfig));
+app.use(cors(corsOptions));
 app.use(bodyParser.json({ limit: '50mb' }));
 app.use(
   bodyParser.urlencoded({
