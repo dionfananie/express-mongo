@@ -22,7 +22,7 @@ router.get('/', async (req, res) => {
 
 router.post('/', async (req, res) => {
   try {
-    const { name, address, handphone, qurban, description } = req.body || {};
+    const { name, address, handphone, qurban, description, hasPaid } = req.body || {};
     const parsedQurban = JSON.parse(qurban);
     const qurbanId = parsedQurban.qurban_id;
     const buyer = new Buyer({
@@ -31,8 +31,8 @@ router.post('/', async (req, res) => {
       handphone: handphone,
       qurban: parsedQurban,
       desc: description,
+      has_paid: hasPaid,
     });
-
     const resp = await buyer.save();
     if (qurbanId && resp.name) {
       await Qurban.findByIdAndUpdate(qurbanId, { $inc: { quota: -1 } }, { new: true });
@@ -40,6 +40,22 @@ router.post('/', async (req, res) => {
     res.json({ is_success: 1, message: `Success add Qurban's buyer` });
   } catch (error) {
     console.error(error);
+    res.json({ message: error });
+  }
+});
+
+router.get('/update/paid', async (req, res) => {
+  const id = req.query.id || 0;
+  try {
+    if (id) {
+      await Buyer.findByIdAndUpdate(id, { has_paid: true }, { new: true });
+      res.json({ is_success: 1, message: 'Berhasil mengupdate kelunasan' });
+      return;
+    }
+    res.json({ is_success: 0, message: 'Gagal mengupdate kelunasan' });
+  } catch (error) {
+    console.error(error);
+
     res.json({ message: error });
   }
 });

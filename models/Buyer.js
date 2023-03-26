@@ -24,6 +24,10 @@ const BuyerSchema = mongoose.Schema({
     require: true,
   },
   desc: String,
+  has_paid: {
+    type: Boolean,
+    require: true,
+  },
   date: {
     type: Date,
     default: Date.now,
