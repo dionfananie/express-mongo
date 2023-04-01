@@ -44,7 +44,7 @@ router.post('/', async (req, res) => {
   }
 });
 
-router.get('/update/paid', async (req, res) => {
+router.put('/update/paid', async (req, res) => {
   const id = req.query.id || 0;
   try {
     if (id) {
@@ -60,7 +60,7 @@ router.get('/update/paid', async (req, res) => {
   }
 });
 
-router.get('/delete', async (req, res) => {
+router.delete('/', async (req, res) => {
   try {
     const id = req.query.id || 0;
     if (!id) {

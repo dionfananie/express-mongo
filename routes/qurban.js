@@ -22,40 +22,11 @@ router.get('/', async (req, res) => {
   }
 });
 
-router.get('/type', async (req, res) => {
-  const id = req.query.id || 0;
-  try {
-    let lists = [];
-    if (id) lists = await QurbanType.findById(id);
-    else lists = await QurbanType.find();
-    res.json(lists);
-  } catch (error) {
-    console.error(error);
-
-    res.json({ message: error });
-  }
-});
-
-router.post('/update', async (req, res) => {
-  const id = req.query.id || 0;
-  const total = req.query.total || 0;
-  try {
-    let lists = [];
-    if (id) lists = await Qurban.findOneAndUpdate({ _id: id }, { $inc: { quota: total * -1 } }, { new: true });
-    else lists = await Qurban.find();
-    res.json(lists);
-  } catch (error) {
-    console.error(error);
-
-    res.json({ message: error });
-  }
-});
-
 /**
  * function create qurban sapi
  */
 
-router.post('/create', upload.single('image'), async (req, res) => {
+router.post('/', upload.single('image'), async (req, res) => {
   try {
     res.header('Access-Control-Allow-Origin', '*');
     res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
@@ -76,7 +47,22 @@ router.post('/create', upload.single('image'), async (req, res) => {
   }
 });
 
-router.get('/delete', async (req, res) => {
+router.put('/', async (req, res) => {
+  const id = req.query.id || 0;
+  const total = req.query.total || 0;
+  try {
+    let lists = [];
+    if (id) lists = await Qurban.findOneAndUpdate({ _id: id }, { $inc: { quota: total * -1 } }, { new: true });
+    else lists = await Qurban.find();
+    res.json(lists);
+  } catch (error) {
+    console.error(error);
+
+    res.json({ message: error });
+  }
+});
+
+router.delete('/', async (req, res) => {
   try {
     const id = req.query.id || 0;
     const qurban = await Qurban.findById(id);
@@ -100,7 +86,12 @@ router.get('/delete', async (req, res) => {
   }
 });
 
-router.post('/type/create', async (req, res) => {
+/**
+ * Function Qurban Type
+ *
+ */
+
+router.post('/type', async (req, res) => {
   try {
     const qurban = new QurbanType({
       name: req.body.name,
@@ -113,7 +104,21 @@ router.post('/type/create', async (req, res) => {
   }
 });
 
-router.get('/type/delete', async (req, res) => {
+router.get('/type', async (req, res) => {
+  const id = req.query.id || 0;
+  try {
+    let lists = [];
+    if (id) lists = await QurbanType.findById(id);
+    else lists = await QurbanType.find();
+    res.json(lists);
+  } catch (error) {
+    console.error(error);
+
+    res.json({ message: error });
+  }
+});
+
+router.delete('/type', async (req, res) => {
   try {
     const id = req.query.id || 0;
     const resp = await QurbanType.deleteOne({ _id: id });
