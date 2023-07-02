@@ -33,10 +33,10 @@ app.use(
     extended: true,
   }),
 );
-// app.use('/post', postRoutes);
-// app.use('/qurban', qurbanRoutes);
-// app.use('/buyer', buyerRoutes);
-// app.use('/auth', authRoutes);
+app.use('/post', postRoutes);
+app.use('/qurban', qurbanRoutes);
+app.use('/buyer', buyerRoutes);
+app.use('/auth', authRoutes);
 
 app.get('/', (_req: Request, res: Response) => {
   res.send('Welcome to express mongo in dionfananie.my.id');
