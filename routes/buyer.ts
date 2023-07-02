@@ -1,6 +1,8 @@
 import { Request, Response } from 'express';
+import { ZodError } from 'zod';
 
 const express = require('express');
+const BuyerData = require('Validation/buyer');
 const sanitizeObject = require('../helpers/sanitizeObject');
 
 const router = express.Router();
@@ -25,25 +27,29 @@ router.get('/', async (req: Request, res: Response) => {
 
 router.post('/', async (req: Request, res: Response) => {
   try {
-    const { name, address, handphone, qurban, description, hasPaid } = req.body || {};
-    const parsedQurban = JSON.parse(qurban);
-    const qurbanId = parsedQurban.qurban_id;
-    const buyer = new Buyer({
-      name: name,
-      address: address,
-      handphone: handphone,
-      qurban: parsedQurban,
-      desc: description,
-      has_paid: hasPaid,
-    });
-    const resp = await buyer.save();
-    if (qurbanId && resp.name) {
-      await Qurban.findByIdAndUpdate(qurbanId, { $inc: { quota: -1 } }, { new: true });
+    const validatedData = BuyerData.parse(req.body);
+    if (validatedData) {
+      const { name, address, handphone, qurban, description, hasPaid } = req.body;
+      const parsedQurban = JSON.parse(qurban);
+      const qurbanId = parsedQurban.qurban_id;
+      const buyer = new Buyer({
+        name: name,
+        address: address,
+        handphone: handphone,
+        qurban: parsedQurban,
+        desc: description,
+        has_paid: hasPaid,
+      });
+      const resp = await buyer.save();
+      if (qurbanId && resp.name) {
+        await Qurban.findByIdAndUpdate(qurbanId, { $inc: { quota: -1 } }, { new: true });
+      }
+      res.json({ is_success: 1, message: `Success add Qurban's buyer` });
     }
-    res.json({ is_success: 1, message: `Success add Qurban's buyer` });
   } catch (error) {
-    console.error(error);
-    res.json({ message: error });
+    if (error instanceof ZodError) {
+      return { is_success: 0, message: error.flatten() };
+    } else res.json({ is_success: 0, message: error });
   }
 });
 

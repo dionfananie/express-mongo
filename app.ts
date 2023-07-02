@@ -10,7 +10,6 @@ const bodyParser = require('body-parser');
 const postRoutes = require('./routes/post');
 const buyerRoutes = require('./routes/buyer');
 const qurbanRoutes = require('./routes/qurban');
-const authRoutes = require('./routes/auth');
 const connectMongo = require('./utils/connectMongo');
 const port = 3001;
 var whitelist = process.env.ALLOWED_ORIGIN || 'http://localhost:3000';
@@ -36,7 +35,6 @@ app.use(
 app.use('/post', postRoutes);
 app.use('/qurban', qurbanRoutes);
 app.use('/buyer', buyerRoutes);
-app.use('/auth', authRoutes);
 
 app.get('/', (_req: Request, res: Response) => {
   res.send('Welcome to express mongo in dionfananie.my.id');
