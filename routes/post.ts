@@ -1,8 +1,10 @@
+import { Request, Response } from 'express';
+
 const express = require('express');
 const router = express.Router();
 const Post = require('../models/Post');
 
-router.get('/', async (req, res) => {
+router.get('/', async (req: Request, res: Response) => {
   const id = req.query.id || 0;
   try {
     let posts = [];
@@ -15,7 +17,7 @@ router.get('/', async (req, res) => {
   }
 });
 
-router.post('/', async (req, res) => {
+router.post('/', async (req: Request, res: Response) => {
   const post = new Post({
     title: req.body.title,
     desc: req.body.desc,

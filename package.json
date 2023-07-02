@@ -7,11 +7,11 @@
   "scripts": {
     "start": "node server",
     "dev": "nodemon server-dev",
-    "dev-local": "nodemon app.js",
-    "start-local": "node app.js"
+    "dev-local": "nodemon app.ts",
+    "start-local": "node app"
   },
   "engines": {
-    "node": "14.19.3"
+    "node": "16.20.0"
   },
   "dependencies": {
     "@hapi/joi": "^17.1.1",
@@ -30,9 +30,13 @@
     "path": "^0.12.7"
   },
   "devDependencies": {
+    "@types/express": "^4.17.17",
+    "@types/multer": "^1.4.7",
+    "@types/node": "^20.3.3",
     "eslint": "^8.8.0",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-prettier": "^4.0.0",
-    "prettier": "^2.5.1"
+    "prettier": "^2.5.1",
+    "typescript": "^5.1.6"
   }
 }

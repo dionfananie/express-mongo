@@ -1,3 +1,5 @@
+import { Request, Response } from 'express';
+
 const express = require('express');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
@@ -5,7 +7,7 @@ const router = express.Router();
 const User = require('../models/User');
 const { registerValidation, loginValidation } = require('../Validation/user');
 
-router.post('/register', async (req, res) => {
+router.post('/register', async (req: Request, res: Response) => {
   const { name, email, password } = req.body || {};
 
   //   checking validation
@@ -29,11 +31,12 @@ router.post('/register', async (req, res) => {
     await user.save();
     res.send({ user: user._id, name, email });
   } catch (err) {
-    res.json({ message: err.toString() });
+    const error = err as Error;
+    res.json({ message: error.toString() });
   }
 });
 
-router.post('/login', async (req, res) => {
+router.post('/login', async (req: Request, res: Response) => {
   try {
     const { email, password } = req.body || {};
     // validate user

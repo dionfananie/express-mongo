@@ -1,6 +1,13 @@
-const mongoose = require('mongoose');
+import { Schema, model } from 'mongoose';
 
-const UserSchema = mongoose.Schema({
+interface PostType {
+  name: string;
+  email: string;
+  password: string;
+  date: Date;
+}
+
+const UserSchema = new Schema<PostType>({
   name: {
     type: String,
     required: true,
@@ -23,4 +30,4 @@ const UserSchema = mongoose.Schema({
   },
 });
 
-module.exports = mongoose.model('User', UserSchema);
+module.exports = model('User', UserSchema);

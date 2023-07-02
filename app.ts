@@ -1,3 +1,5 @@
+import { Express, Request, Response } from 'express';
+
 const express = require('express');
 const app = express();
 const cors = require('cors');
@@ -11,10 +13,10 @@ const qurbanRoutes = require('./routes/qurban');
 const authRoutes = require('./routes/auth');
 const connectMongo = require('./utils/connectMongo');
 const port = 3001;
-var whitelist = process.env.ALLOWED_ORIGIN;
+var whitelist = process.env.ALLOWED_ORIGIN || 'http://localhost:3000';
 var corsOptions = {
   credentials: true,
-  origin: function (origin, callback) {
+  origin: function (origin: string, callback: Function) {
     const originUrl = origin || whitelist;
     if (whitelist.indexOf(originUrl) !== -1) {
       callback(null, true);
@@ -31,12 +33,12 @@ app.use(
     extended: true,
   }),
 );
-app.use('/post', postRoutes);
-app.use('/qurban', qurbanRoutes);
-app.use('/buyer', buyerRoutes);
-app.use('/auth', authRoutes);
+// app.use('/post', postRoutes);
+// app.use('/qurban', qurbanRoutes);
+// app.use('/buyer', buyerRoutes);
+// app.use('/auth', authRoutes);
 
-app.get('/', (req, res) => {
+app.get('/', (_req: Request, res: Response) => {
   res.send('Welcome to express mongo in dionfananie.my.id');
 });
 

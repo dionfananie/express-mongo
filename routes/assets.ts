@@ -1,8 +1,10 @@
+import { Request, Response } from 'express';
+
 const express = require('express');
 const router = express.Router();
 const cloudinary = require('../utils/cloudinary');
 
-router.get('/', async (req, res) => {
+router.get('/', async (req: Request, res: Response) => {
   try {
     res.json({ text: 'hello' });
   } catch (error) {
@@ -12,7 +14,7 @@ router.get('/', async (req, res) => {
   }
 });
 
-router.get('/delete', async (req, res) => {
+router.get('/delete', async (req: Request, res: Response) => {
   try {
     const id = req.query.id || 0;
     const { result } = await cloudinary.uploader.destroy(id);

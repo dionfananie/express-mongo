@@ -1,3 +1,5 @@
+import { Request, Response } from 'express';
+
 const express = require('express');
 const router = express.Router();
 const Qurban = require('../models/Qurban');
@@ -6,7 +8,7 @@ const cloudinary = require('../utils/cloudinary');
 const upload = require('../utils/multer');
 const sanitizeObject = require('../helpers/sanitizeObject');
 
-router.get('/', async (req, res) => {
+router.get('/', async (req: Request, res: Response) => {
   const { id, projection } = req.query;
 
   const trustedProjection = sanitizeObject(projection);
@@ -26,7 +28,7 @@ router.get('/', async (req, res) => {
  * function create qurban sapi
  */
 
-router.post('/', upload.single('image'), async (req, res) => {
+router.post('/', upload.single('image'), async (req: any, res: Response) => {
   try {
     res.header('Access-Control-Allow-Origin', '*');
     res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
@@ -47,9 +49,9 @@ router.post('/', upload.single('image'), async (req, res) => {
   }
 });
 
-router.put('/', async (req, res) => {
+router.put('/', async (req: Request, res: Response) => {
   const id = req.query.id || 0;
-  const total = req.query.total || 0;
+  const total = Number(req.query.total) || 0;
   try {
     let lists = [];
     if (id) lists = await Qurban.findOneAndUpdate({ _id: id }, { $inc: { quota: total * -1 } }, { new: true });
@@ -62,7 +64,7 @@ router.put('/', async (req, res) => {
   }
 });
 
-router.delete('/', async (req, res) => {
+router.delete('/', async (req: Request, res: Response) => {
   try {
     const id = req.query.id || 0;
     const qurban = await Qurban.findById(id);
@@ -91,7 +93,7 @@ router.delete('/', async (req, res) => {
  *
  */
 
-router.post('/type', async (req, res) => {
+router.post('/type', async (req: Request, res: Response) => {
   try {
     const qurban = new QurbanType({
       name: req.body.name,
@@ -104,7 +106,7 @@ router.post('/type', async (req, res) => {
   }
 });
 
-router.get('/type', async (req, res) => {
+router.get('/type', async (req: Request, res: Response) => {
   const id = req.query.id || 0;
   try {
     let lists = [];
@@ -118,7 +120,7 @@ router.get('/type', async (req, res) => {
   }
 });
 
-router.delete('/type', async (req, res) => {
+router.delete('/type', async (req: Request, res: Response) => {
   try {
     const id = req.query.id || 0;
     const resp = await QurbanType.deleteOne({ _id: id });

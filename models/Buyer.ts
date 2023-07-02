@@ -1,12 +1,27 @@
-const mongoose = require('mongoose');
+import { Schema, model } from 'mongoose';
 
-const QurbanSchema = mongoose.Schema({
+interface QurbanType {
+  qurban_id: string;
+  name: string;
+  qurban_type: string;
+}
+interface BuyerType {
+  name: string;
+  address: string;
+  handphone: string;
+  qurban: QurbanType;
+  desc: string;
+  has_paid: boolean;
+  date: Date;
+}
+
+const QurbanSchema = new Schema<QurbanType>({
   qurban_id: String,
   name: String,
   qurban_type: String,
 });
 
-const BuyerSchema = mongoose.Schema({
+const BuyerSchema = new Schema<BuyerType>({
   name: {
     type: String,
     require: true,
@@ -34,4 +49,4 @@ const BuyerSchema = mongoose.Schema({
   },
 });
 
-module.exports = mongoose.model('List_Buyer', BuyerSchema);
+module.exports = model('List_Buyer', BuyerSchema);

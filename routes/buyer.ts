@@ -1,10 +1,13 @@
+import { Request, Response } from 'express';
+
 const express = require('express');
 const sanitizeObject = require('../helpers/sanitizeObject');
+
 const router = express.Router();
 const Buyer = require('../models/Buyer');
 const Qurban = require('../models/Qurban');
 
-router.get('/', async (req, res) => {
+router.get('/', async (req: Request, res: Response) => {
   const { id, qurbanId, projection } = req.query;
   const trustedProjection = sanitizeObject(projection);
   try {
@@ -20,7 +23,7 @@ router.get('/', async (req, res) => {
   }
 });
 
-router.post('/', async (req, res) => {
+router.post('/', async (req: Request, res: Response) => {
   try {
     const { name, address, handphone, qurban, description, hasPaid } = req.body || {};
     const parsedQurban = JSON.parse(qurban);
@@ -44,7 +47,7 @@ router.post('/', async (req, res) => {
   }
 });
 
-router.put('/update/paid', async (req, res) => {
+router.put('/update/paid', async (req: Request, res: Response) => {
   const id = req.query.id || 0;
   try {
     if (id) {
@@ -60,7 +63,7 @@ router.put('/update/paid', async (req, res) => {
   }
 });
 
-router.delete('/', async (req, res) => {
+router.delete('/', async (req: Request, res: Response) => {
   try {
     const id = req.query.id || 0;
     if (!id) {
