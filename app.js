@@ -43,4 +43,4 @@ app.get('/', (req, res) => {
 // connect to DB
 connectMongo();
 
-app.listen(process.env.PORT || 3030);
+app.listen(process.env.PORT || 3001);
