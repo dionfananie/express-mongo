@@ -37,7 +37,7 @@ app.use('/buyer', buyerRoutes);
 app.use('/auth', authRoutes);
 
 app.get('/', (req, res) => {
-  res.send('Welcome to express mongo in render');
+  res.send('Welcome to express mongo in dionfananie.my.id');
 });
 
 // connect to DB
