@@ -21,4 +21,4 @@ mongoose.connect(mongoUrl, { useNewUrlParser: true }, () => {
   console.log('connected to DB Mongo Atlas!');
 });
 
-app.listen(process.env.PORT || 3030);
+app.listen(process.env.PORT || 3001);
