@@ -10,7 +10,7 @@ const buyerRoutes = require('./routes/buyer');
 const qurbanRoutes = require('./routes/qurban');
 const authRoutes = require('./routes/auth');
 const connectMongo = require('./utils/connectMongo');
-
+const port = 3001;
 var whitelist = process.env.ALLOWED_ORIGIN;
 var corsOptions = {
   credentials: true,
@@ -43,4 +43,5 @@ app.get('/', (req, res) => {
 // connect to DB
 connectMongo();
 
-app.listen(process.env.PORT || 3001);
+app.listen(process.env.PORT || port);
+console.log(`running on port ${process.env.PORT || port}`);
