@@ -7,7 +7,7 @@
       "@middleware/*": ["middleware/*"],
       "@utils/*": ["utils/*"],
       "@helpers/*": ["helpers/*"],
-      "@validation/*": ["validation/*"],
+      "@validation/*": ["validationData/*"],
       "@controllers/*": ["controllers/*"]
     },
     "target": "es6",
