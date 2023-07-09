@@ -9,11 +9,14 @@ router.get('/', async (req: Request, res: Response) => {
 
   const id = req.query.id || 0;
   try {
+    console.log('masuk');
     if (id) {
       const posts = await Post.findById(id);
       res.json(posts);
     } else {
       const posts = await Post.find();
+      console.log('posts: ', posts);
+
       res.json(posts);
     }
   } catch (error) {
