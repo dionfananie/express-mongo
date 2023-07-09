@@ -89,10 +89,14 @@ export const updateQurban = async (req: Request, res: Response) => {
 };
 
 export const getType = async (req: Request, res: Response) => {
-  const id = req.query.id || 0;
+  const id = req.query.id || '';
+  const typeQurban = req.query.type || '';
   try {
     if (id) {
       const qurbanType = await QurbanType.findById(id);
+      res.json(qurbanType);
+    } else if (typeQurban) {
+      const qurbanType = await QurbanType.find({ type: typeQurban });
       res.json(qurbanType);
     } else {
       const qurbanType = await QurbanType.find();

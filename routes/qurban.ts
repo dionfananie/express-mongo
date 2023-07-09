@@ -1,3 +1,4 @@
+import { validateQurbanType } from '../middleware/qurban';
 import {
   addQurban,
   deleteQurban,
@@ -7,6 +8,7 @@ import {
   postType,
   updateQurban,
 } from '../controllers/qurban';
+import { qurbanTypeSchema } from '../schemas/qurban';
 
 const express = require('express');
 const router = express.Router();
@@ -27,7 +29,7 @@ router.delete('/', deleteQurban);
  *
  */
 router.post('/type', postType);
-router.get('/type', getType);
+router.get('/type', validateQurbanType(qurbanTypeSchema), getType);
 router.delete('/type', deleteType);
 
 export default router;
