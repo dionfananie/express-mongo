@@ -5,7 +5,7 @@ import { ZodError } from 'zod';
 import Buyer from '../models/Buyer';
 import Qurban from '../models/Qurban';
 import sanitizeObject from '../helpers/sanitizeObject';
-import BuyerData from '../validationData/buyer';
+import BuyerData from '../validation/buyer';
 
 export const getAllBuyer = async (req: Request, res: Response) => {
   const { id, qurbanId, projection } = req.query;
