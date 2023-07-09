@@ -5,18 +5,13 @@ const router = express.Router();
 const Post = require('../models/Post');
 
 router.get('/', async (req: Request, res: Response) => {
-  console.log('masuk');
-
   const id = req.query.id || 0;
   try {
-    console.log('masuk try');
     if (id) {
       const posts = await Post.findById(id);
       res.json(posts);
     } else {
       const posts = await Post.find();
-      console.log('posts: ', posts);
-
       res.json(posts);
     }
   } catch (error) {
