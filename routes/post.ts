@@ -2,15 +2,18 @@ import { Request, Response } from 'express';
 
 const express = require('express');
 const router = express.Router();
-const Post = require('../models/Post');
+import Post from '../models/Post';
 
 router.get('/', async (req: Request, res: Response) => {
   const id = req.query.id || 0;
   try {
-    let posts = [];
-    if (id) posts = await Post.findById(id);
-    else posts = await Post.find();
-    res.json(posts);
+    if (id) {
+      const posts = await Post.findById(id);
+      res.json(posts);
+    } else {
+      const posts = await Post.find();
+      res.json(posts);
+    }
   } catch (error) {
     console.error(error);
     res.json({ message: error });
