@@ -7,4 +7,4 @@ function sanitizeObject(projection: string) {
   return trustedProjection;
 }
 
-module.exports = sanitizeObject;
+export default sanitizeObject;

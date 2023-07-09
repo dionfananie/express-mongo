@@ -1,6 +1,7 @@
 import { Schema, model } from 'mongoose';
+import type { Document } from 'mongoose';
 
-interface QurbanType {
+export interface QurbanType extends Document {
   image: { photos: string; id: string };
   name: string;
   weight: string;
@@ -39,4 +40,4 @@ const QurbanSchema = new Schema<QurbanType>({
   },
 });
 
-module.exports = model('List_Qurban', QurbanSchema);
+export default model<QurbanType>('List_Qurban', QurbanSchema);

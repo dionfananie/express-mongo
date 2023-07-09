@@ -1,6 +1,7 @@
 import { Schema, model } from 'mongoose';
+import type { Document } from 'mongoose';
 
-interface PostType {
+interface PostType extends Document {
   title: string;
   desc: string;
   date: Date;
@@ -18,4 +19,4 @@ const PostSchema = new Schema<PostType>({
   },
 });
 
-module.exports = model('Post', PostSchema);
+export default model<PostType>('Post', PostSchema);

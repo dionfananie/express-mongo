@@ -1,11 +1,12 @@
 import { Schema, model } from 'mongoose';
+import type { Document } from 'mongoose';
 
 interface QurbanType {
   qurban_id: string;
   name: string;
   qurban_type: string;
 }
-interface BuyerType {
+interface BuyerType extends Document {
   name: string;
   address: string;
   handphone: string;
@@ -49,4 +50,4 @@ const BuyerSchema = new Schema<BuyerType>({
   },
 });
 
-module.exports = model('List_Buyer', BuyerSchema);
+export default model<BuyerType>('List_Buyer', BuyerSchema);

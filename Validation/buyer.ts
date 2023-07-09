@@ -11,4 +11,4 @@ const BuyerData = z.object({
   date: z.date(),
 });
 
-module.exports = BuyerData;
+export default BuyerData;
