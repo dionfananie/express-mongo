@@ -1,4 +1,4 @@
-import { Request, Response } from 'express';
+import type { Request, Response } from 'express';
 import { ZodError } from 'zod';
 
 const express = require('express');
@@ -88,4 +88,4 @@ router.delete('/', async (req: Request, res: Response) => {
   }
 });
 
-module.exports = router;
+export default router;

@@ -6,9 +6,11 @@ const cors = require('cors');
 const bodyParser = require('body-parser');
 
 // import routes
-const postRoutes = require('./routes/post');
-const buyerRoutes = require('./routes/buyer');
-const qurbanRoutes = require('./routes/qurban');
+import postRoutes from './routes/post';
+import buyerRoutes from './routes/buyer';
+import qurbanRoutes from './routes/qurban';
+import authRoutes from './routes/auth';
+
 import corSetting from './utils/corsSetting';
 import connectMongo from './utils/connectMongo';
 import { PORT } from './constants';
@@ -16,7 +18,8 @@ require('dotenv/config');
 
 const app = express();
 
-app.use(cors(corSetting));
+app.use(corSetting);
+
 app.use(bodyParser.json({ limit: '50mb' }));
 app.use(
   bodyParser.urlencoded({
@@ -27,6 +30,7 @@ app.use(
 app.use('/post', postRoutes);
 app.use('/qurban', qurbanRoutes);
 app.use('/buyer', buyerRoutes);
+app.use('/auth', authRoutes);
 
 app.get('/', (_req: Request, res: Response) => {
   res.send('Welcome to express mongo in dionfananie.my.id');

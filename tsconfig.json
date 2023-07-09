@@ -7,10 +7,12 @@
       "@middleware/*": ["middleware/*"],
       "@utils/*": ["utils/*"],
       "@helpers/*": ["helpers/*"],
-      "@validation/*": ["Validation/*"]
+      "@validation/*": ["Validation/*"],
+      "@controllers/*": ["controllers/*"]
     },
     "target": "es6",
-    "lib": ["dom", "es6"],
+    "lib": ["es6"],
+    "types": ["node"],
     "allowJs": true,
     "skipLibCheck": true,
     "strict": true,

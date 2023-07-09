@@ -1,7 +1,7 @@
 const cors = require('cors');
 var whitelist = process.env.ALLOWED_ORIGIN || 'http://localhost:3000';
 
-export default cors({
+const corsSetting = cors({
   credentials: true,
   origin: function (origin: string, callback: Function) {
     const originUrl = origin || whitelist;
@@ -12,3 +12,5 @@ export default cors({
     }
   },
 });
+
+export default corsSetting;
