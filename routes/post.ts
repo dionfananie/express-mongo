@@ -2,14 +2,14 @@ import { Request, Response } from 'express';
 
 const express = require('express');
 const router = express.Router();
-import Post from '../models/Post';
+const Post = require('../models/Post');
 
 router.get('/', async (req: Request, res: Response) => {
   console.log('masuk');
 
   const id = req.query.id || 0;
   try {
-    console.log('masuk');
+    console.log('masuk try');
     if (id) {
       const posts = await Post.findById(id);
       res.json(posts);
