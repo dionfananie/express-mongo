@@ -1,30 +1,22 @@
-import { Express, Request, Response } from 'express';
+import { Request, Response } from 'express';
 
-const express = require('express');
-const app = express();
+import express from 'express';
+
 const cors = require('cors');
-require('dotenv/config');
 const bodyParser = require('body-parser');
 
 // import routes
 const postRoutes = require('./routes/post');
 const buyerRoutes = require('./routes/buyer');
 const qurbanRoutes = require('./routes/qurban');
-const connectMongo = require('./utils/connectMongo');
-const port = 3001;
-var whitelist = process.env.ALLOWED_ORIGIN || 'http://localhost:3000';
-var corsOptions = {
-  credentials: true,
-  origin: function (origin: string, callback: Function) {
-    const originUrl = origin || whitelist;
-    if (whitelist.indexOf(originUrl) !== -1) {
-      callback(null, true);
-    } else {
-      callback(new Error('Not allowed by CORS'));
-    }
-  },
-};
-app.use(cors(corsOptions));
+import corSetting from './utils/corsSetting';
+import connectMongo from './utils/connectMongo';
+import { PORT } from './constants';
+require('dotenv/config');
+
+const app = express();
+
+app.use(cors(corSetting));
 app.use(bodyParser.json({ limit: '50mb' }));
 app.use(
   bodyParser.urlencoded({
@@ -43,5 +35,5 @@ app.get('/', (_req: Request, res: Response) => {
 // connect to DB
 connectMongo();
 
-app.listen(process.env.PORT || port);
-console.log(`running on port ${process.env.PORT || port}`);
+app.listen(process.env.PORT || PORT);
+console.log(`running on PORT ${process.env.PORT || PORT}`);

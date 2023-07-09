@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import { ZodError } from 'zod';
 
 const express = require('express');
-const BuyerData = require('Validation/buyer');
+const BuyerData = require('../Validation/buyer');
 const sanitizeObject = require('../helpers/sanitizeObject');
 
 const router = express.Router();

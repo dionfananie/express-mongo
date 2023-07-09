@@ -6,7 +6,8 @@
       "@routes/*": ["routes/*"],
       "@middleware/*": ["middleware/*"],
       "@utils/*": ["utils/*"],
-      "@helpers/*": ["helpers/*"]
+      "@helpers/*": ["helpers/*"],
+      "@validation/*": ["Validation/*"]
     },
     "target": "es6",
     "lib": ["dom", "es6"],
