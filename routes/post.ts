@@ -5,6 +5,8 @@ const router = express.Router();
 import Post from '../models/Post';
 
 router.get('/', async (req: Request, res: Response) => {
+  console.log('masuk');
+
   const id = req.query.id || 0;
   try {
     if (id) {
