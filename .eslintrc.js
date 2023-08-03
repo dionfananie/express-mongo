@@ -5,18 +5,24 @@ module.exports = {
     commonjs: true,
     browser: true,
   },
-  extends: ['prettier'],
   plugins: ['prettier'],
 
   parserOptions: {
-    ecmaVersion: 2018,
+    ecmaVersion: 2020,
     sourceType: 'module',
   },
+  extends: [
+    'eslint:recommended',
+    'prettier',
+    'plugin:@typescript-eslint/eslint-recommended',
+    'plugin:@typescript-eslint/recommended',
+  ],
   rules: {
     'prettier/prettier': 'error',
     'class-methods-use-this': 'off',
     'no-param-reassign': 'error',
     camelcase: 'off',
-    'no-unused-vars': ['error', { argsIgnorePattern: 'next' }],
+    '@typescript-eslint/no-unused-vars': 'off',
+    // 'no-unused-vars': ['none', { argsIgnorePattern: 'next' }],
   },
 };
