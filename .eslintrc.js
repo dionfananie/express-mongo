@@ -23,6 +23,6 @@ module.exports = {
     'no-param-reassign': 'error',
     camelcase: 'off',
     '@typescript-eslint/no-unused-vars': 'off',
-    // 'no-unused-vars': ['none', { argsIgnorePattern: 'next' }],
+    'no-unused-vars': ['none', { argsIgnorePattern: 'next' }],
   },
 };
