@@ -18,18 +18,6 @@ router.get('/', async (req, res) => {
       'Transfer-Encoding': 'chunked',
     });
     const response = await synthesize();
-    // const client = new textToSpeech.TextToSpeechClient();
-    // const text = 'This is a demonstration of the Google Cloud Text-to-Speech API';
-  
-    // const request = {
-    //   input: { text: text },
-    //   voice: { languageCode: 'en-US', ssmlGender: 'NEUTRAL' },
-    //   audioConfig: { audioEncoding: 'MP3' },
-    // };
-   
-  
-    // const [response] = await client.synthesizeSpeech(request);
-  
     const bufferStream = new stream.PassThrough();
     bufferStream.end(Buffer.from(response.audioContent));
     bufferStream.pipe(res);
