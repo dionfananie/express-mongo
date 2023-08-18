@@ -19,7 +19,7 @@
     "add-build"
   ],
   "engines": {
-    "node": "16.20.0"
+    "node": "18.20.0"
   },
   "dependencies": {
     "@vercel/node": "^1.11.1",
