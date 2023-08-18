@@ -17,9 +17,9 @@
     "ts.check",
     "build",
     "add-build"
-],
+  ],
   "engines": {
-    "node": "18.15.0"
+    "node": "16.20.0"
   },
   "dependencies": {
     "@vercel/node": "^1.11.1",
@@ -44,7 +44,9 @@
     "eslint": "^8.8.0",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-prettier": "^4.0.0",
+    "pre-commit": "^1.2.2",
     "prettier": "^2.5.1",
+    "rimraf": "^5.0.1",
     "typescript": "^5.1.6"
   }
 }
