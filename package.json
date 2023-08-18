@@ -8,10 +8,18 @@
     "start": "node server",
     "dev": "nodemon server-dev",
     "dev-local": "nodemon app.ts",
-    "start-local": "node app"
+    "start-local": "node app",
+    "build": "rimraf dist && tsc",
+    "ts.check": "tsc --project tsconfig.json",
+    "add-build": "git add dist"
   },
+  "pre-commit": [
+    "ts.check",
+    "build",
+    "add-build"
+],
   "engines": {
-    "node": "16.15.0"
+    "node": "18.15.0"
   },
   "dependencies": {
     "@vercel/node": "^1.11.1",
