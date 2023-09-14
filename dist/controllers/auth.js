@@ -39,10 +39,10 @@ const signIn = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
             email: req.body.email,
         });
         if (!user || !user.comparePassword(req.body.password)) {
-            return res.status(401).json({ message: 'Authentication Failed. Invalid User Email or Password' });
+            return res.status(401).json({ success: false, message: 'Authentication Failed. Invalid User Email or Password' });
         }
         const jwtToken = jwt.sign({ email: user.email, name: user.name, _id: user._id }, process.env.TOKEN_SECRET);
-        return res.json({ token: jwtToken });
+        return res.json({ token: jwtToken, success: true, message: 'Success!' });
     }
     catch (error) {
         console.error(error);
