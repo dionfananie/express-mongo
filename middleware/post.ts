@@ -1,7 +1,7 @@
 import type { NextFunction, Request, Response } from 'express';
 import { PostData } from '../validation/post';
 
-export const validatePostType = () => (req: Request, res: Response, next: NextFunction) => {
+export const validatePostType = (req: Request, res: Response, next: NextFunction) => {
   try {
     PostData.parse(req.body);
     next();

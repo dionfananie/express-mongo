@@ -18,12 +18,17 @@ export const getPosts = async (req: Request, res: Response) => {
 };
 
 export const insertPost = async (req: Request, res: Response) => {
-  const post = new Post({
-    title: req.body.title,
-    desc: req.body.desc,
-  });
-  const savePost = await post.save();
-  console.log('savePost: ', savePost);
+  try {
+    const post = new Post({
+      title: req.body.title,
+      desc: req.body.desc,
+    });
 
-  res.json(savePost);
+    const savePost = await post.save();
+
+    res.json({ success: 'true', payload: savePost });
+  } catch (error) {
+    res.status(401).json({ success: 'false', payload: null });
+    console.error(error);
+  }
 };

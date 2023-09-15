@@ -7,7 +7,7 @@
   "scripts": {
     "start": "node server",
     "dev": "nodemon server-dev",
-    "dev-local": "nodemon app.ts",
+    "dev-local": "nodemon --files app.ts",
     "start-local": "node app",
     "build": "rimraf dist && tsc",
     "ts.check": "tsc --project tsconfig.json",

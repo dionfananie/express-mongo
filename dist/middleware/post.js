@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.validatePostType = void 0;
 const post_1 = require("../validation/post");
-const validatePostType = () => (req, res, next) => {
+const validatePostType = (req, res, next) => {
     try {
         post_1.PostData.parse(req.body);
         next();

@@ -1,15 +1,5 @@
 {
   "compilerOptions": {
-    "baseUrl": "./",
-    "paths": {
-      "@models/*": ["models/*"],
-      "@routes/*": ["routes/*"],
-      "@middleware/*": ["middleware/*"],
-      "@utils/*": ["utils/*"],
-      "@helpers/*": ["helpers/*"],
-      "@validation/*": ["validation/*"],
-      "@controllers/*": ["controllers/*"]
-    },
     "target": "es6",
     "lib": ["es6"],
     "types": ["node"],
@@ -27,5 +17,6 @@
     "incremental": true
   },
   "include": ["**/*.ts", "**/*.tsx"],
-  "exclude": ["node_modules", "dist"]
+  "exclude": ["node_modules", "dist"],
+  "typeRoots": ["types.d.ts"]
 }

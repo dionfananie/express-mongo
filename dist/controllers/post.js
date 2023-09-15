@@ -33,12 +33,17 @@ const getPosts = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
 });
 exports.getPosts = getPosts;
 const insertPost = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const post = new Post_1.default({
-        title: req.body.title,
-        desc: req.body.desc,
-    });
-    const savePost = yield post.save();
-    console.log('savePost: ', savePost);
-    res.json(savePost);
+    try {
+        const post = new Post_1.default({
+            title: req.body.title,
+            desc: req.body.desc,
+        });
+        const savePost = yield post.save();
+        res.json({ success: 'true', payload: savePost });
+    }
+    catch (error) {
+        res.status(401).json({ success: 'false', payload: null });
+        console.error(error);
+    }
 });
 exports.insertPost = insertPost;
