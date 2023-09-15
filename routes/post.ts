@@ -1,32 +1,9 @@
-import { Request, Response } from 'express';
-
+import { validatePostType } from '../middleware/post';
+import { getPosts, insertPost } from '../controllers/post';
 const express = require('express');
 const router = express.Router();
-const Post = require('../models/Post');
 
-router.get('/', async (req: Request, res: Response) => {
-  const id = req.query.id || 0;
-  try {
-    if (id) {
-      const posts = await Post.findById(id);
-      res.json(posts);
-    } else {
-      const posts = await Post.find();
-      res.json(posts);
-    }
-  } catch (error) {
-    console.error(error);
-    res.json({ message: error });
-  }
-});
-
-router.post('/', async (req: Request, res: Response) => {
-  const post = new Post({
-    title: req.body.title,
-    desc: req.body.desc,
-  });
-  const savePost = await post.save();
-  res.json(savePost);
-});
+router.get('/', getPosts);
+router.post('/', validatePostType(), insertPost);
 
 export default router;

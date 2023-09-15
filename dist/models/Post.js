@@ -12,4 +12,4 @@ const PostSchema = new mongoose_1.Schema({
         default: Date.now,
     },
 });
-module.exports = (0, mongoose_1.model)('Post', PostSchema);
+exports.default = (0, mongoose_1.model)('Post', PostSchema);
