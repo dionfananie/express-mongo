@@ -1,5 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.validateSignUpType = void 0;
+const auth_1 = require("../validation/auth");
 const jwt = require('jsonwebtoken');
 function validateAuth(req, res, next) {
     var _a;
@@ -17,3 +19,14 @@ function validateAuth(req, res, next) {
     }
 }
 exports.default = validateAuth;
+const validateSignUpType = (req, res, next) => {
+    try {
+        auth_1.SignUpData.parse(req.body);
+        next();
+    }
+    catch (err) {
+        console.error(err);
+        res.status(401).json({ message: err });
+    }
+};
+exports.validateSignUpType = validateSignUpType;

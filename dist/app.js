@@ -9,6 +9,7 @@ const bodyParser = require('body-parser');
 const post_1 = __importDefault(require("./routes/post"));
 const buyer_1 = __importDefault(require("./routes/buyer"));
 const qurban_1 = __importDefault(require("./routes/qurban"));
+const auth_1 = __importDefault(require("./routes/auth"));
 const constants_1 = require("./constants");
 const express_1 = __importDefault(require("express"));
 const connectMongo_1 = __importDefault(require("./utils/connectMongo"));
@@ -22,6 +23,7 @@ app.use(bodyParser.urlencoded({
 app.use('/post', post_1.default);
 app.use('/qurban', qurban_1.default);
 app.use('/buyer', buyer_1.default);
+app.use('/auth', auth_1.default);
 // connect to DB
 (0, connectMongo_1.default)();
 app.get('/', (_req, res) => {

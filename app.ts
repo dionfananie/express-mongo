@@ -29,6 +29,7 @@ app.use(
 app.use('/post', postRoutes);
 app.use('/qurban', qurbanRoutes);
 app.use('/buyer', buyerRoutes);
+app.use('/auth', authRoutes);
 
 // connect to DB
 connectMongo();

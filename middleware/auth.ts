@@ -1,4 +1,5 @@
 import { NextFunction, Request, Response } from 'express';
+import { SignUpData } from '../validation/auth';
 
 const jwt = require('jsonwebtoken');
 
@@ -15,3 +16,13 @@ export default function validateAuth(req: Request, res: Response, next: NextFunc
     res.status(400).send({ success: false, message: error });
   }
 }
+
+export const validateSignUpType = (req: Request, res: Response, next: NextFunction) => {
+  try {
+    SignUpData.parse(req.body);
+    next();
+  } catch (err) {
+    console.error(err);
+    res.status(401).json({ message: err });
+  }
+};

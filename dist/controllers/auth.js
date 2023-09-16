@@ -26,7 +26,7 @@ const signUp = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         const newUser = yield new User_1.default(req.body);
         newUser.hash_password = bcrypt.hashSync(req.body.password, 10);
         const resp = yield newUser.save();
-        return res.json({ email: resp.email, name: resp.name });
+        return res.json({ success: true, payload: { email: resp.email, name: resp.name } });
     }
     catch (error) {
         console.error(error);
