@@ -34,6 +34,7 @@ const signUp = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
 });
 exports.signUp = signUp;
 const signIn = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    var _a;
     try {
         const user = yield User_1.default.findOne({
             email: req.body.email,
@@ -41,7 +42,12 @@ const signIn = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         if (!user || !user.comparePassword(req.body.password)) {
             return res.status(401).json({ success: false, message: 'Authentication Failed. Invalid User Email or Password' });
         }
+        const clientCookies = (_a = req === null || req === void 0 ? void 0 : req.cookies) === null || _a === void 0 ? void 0 : _a['auth-login'];
         const jwtToken = jwt.sign({ email: user.email, name: user.name, _id: user._id }, process.env.TOKEN_SECRET);
+        if (!clientCookies) {
+            res.cookie('auth-login', jwtToken, { maxAge: 900000, httpOnly: true });
+            console.log('cookie created successfully');
+        }
         return res.json({ token: jwtToken, success: true, message: 'Success!' });
     }
     catch (error) {

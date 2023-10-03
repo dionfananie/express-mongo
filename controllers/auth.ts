@@ -29,7 +29,13 @@ export const signIn = async (req: Request, res: Response) => {
     if (!user || !user.comparePassword(req.body.password)) {
       return res.status(401).json({ success: false, message: 'Authentication Failed. Invalid User Email or Password' });
     }
+    const clientCookies = req?.cookies?.['auth-login'];
+
     const jwtToken = jwt.sign({ email: user.email, name: user.name, _id: user._id }, process.env.TOKEN_SECRET);
+    if (!clientCookies) {
+      res.cookie('auth-login', jwtToken, { maxAge: 900000, httpOnly: true });
+      console.log('cookie created successfully');
+    }
     return res.json({ token: jwtToken, success: true, message: 'Success!' });
   } catch (error) {
     console.error(error);
