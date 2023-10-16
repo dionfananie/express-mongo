@@ -5,5 +5,6 @@ const auth_1 = require("../controllers/auth");
 const auth_2 = require("../middleware/auth");
 const router = express.Router();
 router.post('/signin', auth_1.signIn);
+router.post('/createCookies', auth_1.createCookies);
 router.post('/signup', auth_2.validateSignUpType, auth_1.signUp);
 exports.default = router;

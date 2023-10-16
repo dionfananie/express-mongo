@@ -1,9 +1,9 @@
 import { Request, Response } from 'express';
 
 import corSetting from './utils/corsSetting';
-
+const fs = require('fs');
 const bodyParser = require('body-parser');
-
+const https = require('https');
 // import routes
 import postRoutes from './routes/post';
 import buyerRoutes from './routes/buyer';
@@ -14,6 +14,9 @@ import { PORT } from './constants';
 
 import express from 'express';
 import connectMongo from './utils/connectMongo';
+
+const key = fs.readFileSync('./cert/localhost-key.pem', 'utf-8');
+const cert = fs.readFileSync('./cert/localhost.pem', 'utf-8');
 
 const app = express();
 
@@ -39,6 +42,11 @@ app.get('/', (_req: Request, res: Response) => {
 });
 const activePort = PORT;
 
-app.listen(activePort, () => {
-  console.log(`Listening on port ${PORT}...`);
+// app.listen(activePort, () => {
+//   console.log(`Listening on port ${PORT}...`);
+// });
+
+const server = https.createServer({ key: key, cert: cert }, app);
+server.listen(activePort, () => {
+  console.log(`listening on ${activePort}`);
 });

@@ -23,6 +23,8 @@ export const signUp = async (req: Request, res: Response) => {
 
 export const signIn = async (req: Request, res: Response) => {
   try {
+    console.log('req.body.email: ', req.body);
+
     const user = await User.findOne({
       email: req.body.email,
     });
@@ -33,9 +35,23 @@ export const signIn = async (req: Request, res: Response) => {
 
     const jwtToken = jwt.sign({ email: user.email, name: user.name, _id: user._id }, process.env.TOKEN_SECRET);
     if (!clientCookies) {
-      res.cookie('auth-login', jwtToken, { maxAge: 900000, httpOnly: true });
+      res.cookie('auth-login', jwtToken, { maxAge: 3 * 24 * 60 * 60, httpOnly: true });
       console.log('cookie created successfully');
     }
+    return res.json({ token: jwtToken, success: true, message: 'Success!' });
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+export const createCookies = async (_: Request, res: Response) => {
+  try {
+    const jwtToken = jwt.sign(
+      { email: 'dion@edo.com', name: 'dionfananie', _id: '0987654321' },
+      process.env.TOKEN_SECRET,
+    );
+    res.cookie('auth-login', jwtToken, { maxAge: 3 * 24 * 60 * 60, httpOnly: true, sameSite: 'none', secure: true });
+    console.log('cookie created successfully');
     return res.json({ token: jwtToken, success: true, message: 'Success!' });
   } catch (error) {
     console.error(error);

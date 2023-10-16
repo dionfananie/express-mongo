@@ -4,7 +4,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const corsSetting_1 = __importDefault(require("./utils/corsSetting"));
+const fs = require('fs');
 const bodyParser = require('body-parser');
+const https = require('https');
 // import routes
 const post_1 = __importDefault(require("./routes/post"));
 const buyer_1 = __importDefault(require("./routes/buyer"));
@@ -13,6 +15,8 @@ const auth_1 = __importDefault(require("./routes/auth"));
 const constants_1 = require("./constants");
 const express_1 = __importDefault(require("express"));
 const connectMongo_1 = __importDefault(require("./utils/connectMongo"));
+const key = fs.readFileSync('./cert/localhost-key.pem', 'utf-8');
+const cert = fs.readFileSync('./cert/localhost.pem', 'utf-8');
 const app = (0, express_1.default)();
 app.use(corsSetting_1.default);
 app.use(bodyParser.json({ limit: '50mb' }));
@@ -30,6 +34,10 @@ app.get('/', (_req, res) => {
     res.send('Welcome to express mongo in dionfananie.my.id');
 });
 const activePort = constants_1.PORT;
-app.listen(activePort, () => {
-    console.log(`Listening on port ${constants_1.PORT}...`);
+// app.listen(activePort, () => {
+//   console.log(`Listening on port ${PORT}...`);
+// });
+const server = https.createServer({ key: key, cert: cert }, app);
+server.listen(activePort, () => {
+    console.log(`listening on ${activePort}`);
 });
