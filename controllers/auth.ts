@@ -50,9 +50,14 @@ export const createCookies = async (_: Request, res: Response) => {
       { email: 'dion@edo.com', name: 'dionfananie', _id: '0987654321' },
       process.env.TOKEN_SECRET,
     );
-    res.cookie('auth-login', jwtToken, { maxAge: 3 * 24 * 60 * 60, httpOnly: true, sameSite: 'none', secure: true });
+    res.cookie('auth-login', jwtToken, {
+      maxAge: 3 * 24 * 60 * 60,
+      httpOnly: true,
+      sameSite: 'none',
+      secure: true,
+    });
     console.log('cookie created successfully');
-    return res.json({ token: jwtToken, success: true, message: 'Success!' });
+    return res.json({ success: true, message: 'Success!' });
   } catch (error) {
     console.error(error);
   }
